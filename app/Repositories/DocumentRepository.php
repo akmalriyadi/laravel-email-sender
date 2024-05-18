@@ -35,7 +35,7 @@ class DocumentRepository extends BaseRepository
             $file = $request->file('file');
             $data['type'] = $file->getClientOriginalExtension();
             $data['real_name'] = $file->getClientOriginalName();
-            $data['file'] = $this->uploadImageV1($request, 'file', customFieldName: $request->title);
+            $data['file'] = $this->uploadFileV1($request, 'file', customFieldName: $request->title);
             return $this->model->create($data);
         } catch (Exception $e) {
             throw $e;
@@ -49,13 +49,13 @@ class DocumentRepository extends BaseRepository
             $source = $this->model->findOrFail($id);
             if (isset($data['file'])) {
                 $file = $request->file('file');
-                $this->deleteImage($source->image);
+                $this->deleteFile($source->image);
                 $data['type'] = $file->getClientOriginalExtension();
                 $data['real_name'] = $file->getClientOriginalName();
-                $data['file'] = $this->uploadImageV1($request, 'file', customFieldName: $request->title);
+                $data['file'] = $this->uploadFileV1($request, 'file', customFieldName: $request->title);
             }
             if ($source->name !== $request->title) {
-                $data['file'] = $this->rename($source->file, $request->title);
+                $data['file'] = $this->renameFile($source->file, $request->title);
             }
             return $source->update($data);
         } catch (Exception $e) {
