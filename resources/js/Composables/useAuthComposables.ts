@@ -30,7 +30,8 @@ export default function useAuthComposables() {
                 core.error.value.init = response.data.message
                 throw response.data.message
             } else {
-                await useAuthStore().setToken(response.data.access_token)
+                await useAuthStore().setToken(response.data.data.token_app)
+                console.log(response)
                 core.error.value = [];
                 router.get('/admin/dashboard')
             }
