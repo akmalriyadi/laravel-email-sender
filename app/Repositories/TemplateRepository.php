@@ -75,6 +75,7 @@ class TemplateRepository extends BaseRepository
             $source->update($template);
             $detailBodyWord = [];
             $detailDocument = [];
+            $documentId = [];
             foreach ($bodyWords as $bodyWord) {
                 $bodyWord['template_id'] = $sourceId;
                 TemplateWord::updateOrCreate([
@@ -83,12 +84,9 @@ class TemplateRepository extends BaseRepository
                 ], $bodyWord);
             }
             foreach ($documents as $document) {
-                $document['template_id'] = $sourceId;
-                TemplateAttach::updateOrCreate([
-                    'template_id' => $sourceId,
-                    'document_id' => $document['document_id']
-                ], $document);
+                $documentId[] = $document['document_id'];
             }
+            // $source->document_pivots()->async($documentId);
             // $source->body_words()->sync($detailBodyWord);
             // $source->document_pivots()->sync($detailDocument);
             // TemplateWord::where('template_id', $sourceId)->delete();
@@ -97,10 +95,10 @@ class TemplateRepository extends BaseRepository
             //     $bodyWord['template_id'] = $sourceId;
             //     TemplateWord::create($bodyWord);
             // }
-            // foreach ($documents as $document) {
-            //     $document['template_id'] = $sourceId;
-            //     TemplateAttach::create($document);
-            // }
+            foreach ($documents as $document) {
+                $document['template_id'] = $sourceId;
+                TemplateAttach::create($document);
+            }
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
