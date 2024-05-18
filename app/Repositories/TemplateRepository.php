@@ -90,7 +90,7 @@ class TemplateRepository extends BaseRepository
             // $source->body_words()->sync($detailBodyWord);
             // $source->document_pivots()->sync($detailDocument);
             // TemplateWord::where('template_id', $sourceId)->delete();
-            // TemplateAttach::where('template_id', $sourceId)->delete();
+            TemplateAttach::where('template_id', $sourceId)->delete();
             // foreach ($bodyWords as $bodyWord) {
             //     $bodyWord['template_id'] = $sourceId;
             //     TemplateWord::create($bodyWord);

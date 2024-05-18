@@ -68,10 +68,10 @@ class EmailSenderRepository extends BaseRepository
                     'val' => $bodyword['val']
                 ]);
             }
-            DB::commit();
             if ($request->status == 'SEND') {
                 $this->send($source->id);
             }
+            DB::commit();
             return;
         } catch (Exception $e) {
             DB::rollBack();
