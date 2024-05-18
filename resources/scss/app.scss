@@ -1,0 +1,41 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+body {
+    @apply text-gray-700 text-[16px];
+}
+
+.bg-auth {
+    background: url("/assets/images/wallpaper.jpg");
+    background-position: center;
+    @apply bg-cover bg-no-repeat w-full relative z-[1] p-10 h-[35rem] rounded-2xl overflow-hidden;
+    &:before {
+        content: var(--tw-content);
+        @apply absolute left-0 right-0 top-0 bottom-0 -z-[1] bg-black opacity-40 w-full h-full;
+    }
+}
+
+aside {
+    .el-menu {
+        .el-menu-item {
+            @apply h-12 flex space-x-4 text-gray-500 #{!important};
+            &.is-active {
+                @apply text-blue-500 font-semibold #{!important};
+            }
+        }
+    }
+}
+
+.el-tooltip__trigger.el-tooltip__trigger {
+    @apply focus-visible:outline-none #{!important};
+}
+
+.text-error {
+    margin-top: 0.25rem !important;
+    @apply text-[12px] text-[#f56c6c];
+}
+
+button:disabled {
+    @apply bg-gray-300 #{!important};
+}
