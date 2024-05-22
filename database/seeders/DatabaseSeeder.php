@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DocumentSeeder::class,
             TemplateSeeder::class,
-            SettingSeeder::class
+            // SettingSeeder::class
         ]);
     }
 }
