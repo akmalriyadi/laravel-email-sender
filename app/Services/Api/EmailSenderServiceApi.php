@@ -19,7 +19,12 @@ class EmailSenderServiceApi extends BaseServiceApi
         $this->mainRepository = $mainRepository;
     }
 
-    public function send($id)
+    /**
+     * Send email
+     * @param int $id
+     * @return mixed
+     */
+    public function send(int $id)
     {
         try {
             $result = $this->mainRepository->send($id);

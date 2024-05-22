@@ -40,11 +40,11 @@ class EmailSenderRepository extends BaseRepository
                     'val' => $bodyword['val']
                 ]);
             }
-            DB::commit();
             if ($request->status == 'SEND') {
                 $this->send($emailCreate->id);
             }
-            return;
+            DB::commit();
+            return 'Succsess';
         } catch (Exception $e) {
             DB::rollBack();
             throw $e;
@@ -79,7 +79,13 @@ class EmailSenderRepository extends BaseRepository
         }
     }
 
-    public function send($id)
+    /**
+     * Send email
+     * @param int $id
+     * @return boolean
+     * @throws Exception
+     */
+    public function send(int $id)
     {
         try {
             $source = $this->model->with(['template', 'template.documents'])->findOrFail($id);
@@ -99,12 +105,9 @@ class EmailSenderRepository extends BaseRepository
                 $source->update([
                     'status' => 'SEND'
                 ]);
-                return 'Success';
+                return true;
             } else {
-                $source->update([
-                    'status' => 'DRAFT'
-                ]);
-                return 'Failure';
+                throw new Exception('Failure send message');
             }
         } catch (Exception $e) {
             throw $e;
@@ -120,7 +123,6 @@ class EmailSenderRepository extends BaseRepository
     {
         try {
             $source = $this->model->with(['template', 'email_words', 'email_words.template_word'])->findOrFail($id);
-            // dd($source);
             $from = [];
             $replace = [];
             foreach ($source->email_words as $word) {
